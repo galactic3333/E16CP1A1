@@ -1,0 +1,56 @@
+psql -U galactic
+CREATE DATABASE call_list;
+\c call_list
+
+call_list=# CREATE TABLE users(
+call_list(# id SERIAL PRIMARY KEY,
+call_list(# first_name VARCHAR(16),
+call_list(# email VARCHAR(24)
+call_list(# );
+
+call_list=# INSERT INTO users (first_name, email) VALUES ('Carlos', 'carlos11@gmail.com');
+call_list=# INSERT INTO users (first_name, email) VALUES ('Laura', 'Laura21@gmail.com');
+
+call_list=# CREATE TABLE calls(
+call_list(# id SERIAl PRIMARY KEY,
+call_list(# phone VARCHAR(12),
+call_list(# date DATE,
+call_list(# user_id INTEGER REFERENCES users(id)
+call_list(# );
+
+call_list=# ALTER TABLE users ADD COLUMN last_name VARCHAR(16);
+
+call_list=# UPDATE users SET last_name = 'Figueroa' WHERE first_name = 'Carlos';
+call_list=# UPDATE users SET last_name = 'Poblete' WHERE first_name = 'Laura';
+
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56988858478', '2018-05-11', 2);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56945858478', '2018-05-12', 2);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56945848078', '2018-05-13', 2);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56947835045', '2018-05-14', 2);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56945678475', '2018-05-15', 2);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56901245789', '2018-05-16', 2);
+
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56901245789', '2018-06-11', 1);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56978945124', '2018-06-12', 1);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56931245784', '2018-06-13', 1);
+call_list=# INSERT INTO calls (phone, date, user_id) VALUES ('+56941021453', '2018-06-14', 1);
+
+call_list=# INSERT INTO users (first_name, email, last_name) VALUES ('Lisa', 'lis21@gmail.com', 'Brown'); 
+
+call_list=# SELECT first_name, COUNT(calls) FROM users FULL JOIN calls ON (users.id = calls.user_id) GROUP BY first_name;
+
+call_list=# SELECT calls FROM users FULL JOIN calls ON (users.id = calls.user_id) WHERE first_name = 'Carlos' ORDER BY date DESC;
+
+call_list=# CREATE TABLE borrado_llamadas(
+call_list(# call_id INTEGER REFERENCES calls(id),
+call_list(# user_id INTEGER REFERENCES users(id),
+call_list(# motivo_borrado VARCHAR(30)
+call_list(# );
+
+
+
+
+
+
+
+
